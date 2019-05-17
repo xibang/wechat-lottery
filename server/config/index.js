@@ -7,5 +7,5 @@ exports.redis = {
 exports.wechatMp = {
   ak: process.env.MP_APPID || '',
   sk: process.env.MP_SECRET || '',
-  redirect: encodeURIComponent('https://test.xb.pub/api/wechat/callback')
+  redirect: encodeURIComponent('http://lottery.wx.xb.pub/api/wechat/callback')
 };
