@@ -41,6 +41,7 @@
 <script>
 export default {
   data: () => ({
+    openid: '',
     count: -1,
     subscribe: 0
   }),
@@ -49,20 +50,27 @@ export default {
   },
   methods: {
     async init() {
-      const { openid = '' } = this.$route.query;
-      if (openid === '') {
+      const { openid: id = '' } = this.$route.query;
+      if (id !== '') {
+        localStorage.setItem('openid', id);
+        localStorage.setItem('date', new Date());
+        this.$router.push('/');
+      }
+      const openid = localStorage.getItem('openid') || '';
+      const date = localStorage.getItem('date') || '';
+      if (openid === '' || date === '' || new Date(date) + 3600000 < new Date()) {
         window.location.href = '/api/wechat/login';
       }
       const { data: { count = -1, subscribe = 0 } } = await this.$axios.$get(`/api/user/check?openid=${openid}`);
       this.count = count;
       this.subscribe = subscribe;
+      this.openid = openid;
     },
     refresh() {
       window.location.reload();
     },
     async submit() {
-      const { openid = '' } = this.$route.query;
-      const { data: { result = -1 } } = await this.$axios.$get(`/api/user/feeling?openid=${openid}`);
+      const { data: { result = -1 } } = await this.$axios.$get(`/api/user/feeling?openid=${this.openid}`);
       if (result === -1) {
         alert('已抽奖过咯');
       }

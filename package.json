@@ -5,7 +5,7 @@
   "author": "willin",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development nodemon server/index.js --watch server",
+    "dev": "cross-env NODE_ENV=development PORT=6030 nodemon server/index.js --watch server",
     "build": "nuxt build",
     "start": "cross-env NODE_ENV=production PORT=6030 node server/index.js",
     "generate": "nuxt generate"
