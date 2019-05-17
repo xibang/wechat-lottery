@@ -17,7 +17,7 @@ exports.feeling = async (req, reply) => {
   const { openid = '' } = req.query;
   const count = ~~await redis.get(`count:${openid}`) + 1;
   let result = -1;
-  if (count < 1) {
+  if (count === 1) {
     await redis.setex(`count:${openid}`, 86400, count);
     result = randNumber(0, 100) === 66 ? 1 : 0;
   }
