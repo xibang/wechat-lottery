@@ -26,5 +26,5 @@ exports.callback = async (req, reply) => {
   // );
   // req.session.user = user;
   // reply.send(user);
-  reply.redirect(`/?openid=${openid}`);
+  reply.redirect('/');
 };

@@ -36,7 +36,6 @@ async function start() {
   fastify.register(fastifyCookie);
   fastify.register(fastifySession, {
     saveUninitialized: false,
-    secure: false,
     secret: '9V_3W<xlxS8:Lk!/qe%IdR1qD+l|"ozrPCZUY:8I?)65+1M>1z(Y>Pa1?L;t8#J',
     store: new RedisStore(Object.assign({}, redis, {
       db: 0,

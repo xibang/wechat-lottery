@@ -3,7 +3,7 @@ const redis = require('../../lib/redis');
 const { getUser } = require('../../lib/actions');
 
 exports.check = async (req, reply) => {
-  const { openid = '' } = req.query;
+  const { openid = '' } = req.session;
   const count = ~~await redis.get(`count:${openid}`);
   const data = { openid, count };
   if (openid !== '') {
@@ -14,7 +14,7 @@ exports.check = async (req, reply) => {
 };
 
 exports.feeling = async (req, reply) => {
-  const { openid = '' } = req.query;
+  const { openid = '' } = req.session;
   const count = ~~await redis.get(`count:${openid}`) + 1;
   let result = -1;
   if (count === 1) {

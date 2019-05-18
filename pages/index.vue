@@ -50,27 +50,19 @@ export default {
   },
   methods: {
     async init() {
-      const { openid: id = '' } = this.$route.query;
-      if (id !== '') {
-        localStorage.setItem('openid', id);
-        localStorage.setItem('date', new Date());
-        this.$router.push('/');
-      }
-      const openid = localStorage.getItem('openid') || '';
-      const date = localStorage.getItem('date') || '';
-      if (openid === '' || date === '' || new Date(date) + 3600000 < new Date()) {
-        window.location.href = '/api/wechat/login';
-      }
-      const { data: { count = -1, subscribe = 0 } } = await this.$axios.$get(`/api/user/check?openid=${openid}`);
+      const { data: { openid = '', count = -1, subscribe = 0 } } = await this.$axios.$get('/api/user/check');
       this.count = count;
       this.subscribe = subscribe;
       this.openid = openid;
+      if (openid === '') {
+        window.location.href = '/api/wechat/login';
+      }
     },
     refresh() {
       window.location.reload();
     },
     async submit() {
-      const { data: { result = -1 } } = await this.$axios.$get(`/api/user/feeling?openid=${this.openid}`);
+      const { data: { result = -1 } } = await this.$axios.$get('/api/user/feeling');
       if (result === -1) {
         alert('已抽奖过咯');
       }
