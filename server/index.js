@@ -35,8 +35,11 @@ async function start() {
   await getGlobalToken(true);
   fastify.register(fastifyCookie);
   fastify.register(fastifySession, {
-    // saveUninitialized: false,
+    saveUninitialized: false,
     secret: '9V_3W<xlxS8:Lk!/qe%IdR1qD+l|"ozrPCZUY:8I?)65+1M>1z(Y>Pa1?L;t8#J',
+    cookie: {
+      secure: false
+    },
     store: new RedisStore(Object.assign({}, redis, {
       db: 0,
       ttl: 86400 * 30
